@@ -9,7 +9,7 @@ public class TextEditorHistory {
     public void type(String text) {
         undoStack.push(currentText);
         currentText += text;
-        redoStack.clear(); // 新增操作後清空 redo
+        redoStack.clear();
         printStatus("Type \"" + text + "\"");
     }
 
@@ -50,11 +50,11 @@ public class TextEditorHistory {
 
         editor.redo();
 
-        editor.type(" Java"); // 新增文字，應清空 redoStack
+        editor.type(" Java");
 
-        editor.redo(); // 測試空 redo 處理
+        editor.redo();
         editor.undo();
         editor.undo();
-        editor.undo(); // 測試空 undo 處理
+        editor.undo();
     }
 }

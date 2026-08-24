@@ -13,8 +13,6 @@ public class EnrollmentCleanup {
         ));
 
         System.out.println("清理前資料: " + rawList);
-
-        // 使用 Iterator 安全移除空白與 null
         Iterator<String> iterator = rawList.iterator();
         while (iterator.hasNext()) {
             String item = iterator.next();
@@ -22,8 +20,6 @@ public class EnrollmentCleanup {
                 iterator.remove();
             }
         }
-
-        // 使用 Set 找出重複姓名與清理後的獨立名單
         Set<String> seen = new HashSet<>();
         Set<String> duplicates = new LinkedHashSet<>();
 

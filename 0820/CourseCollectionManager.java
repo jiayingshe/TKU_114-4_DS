@@ -110,7 +110,6 @@ class CourseManager {
     }
 
     public void removeBelow(int minimum) {
-        // Iterator 確保 List, Set, Map 同步移除
         Iterator<StudentRegistration> it = list.iterator();
         while (it.hasNext()) {
             StudentRegistration sr = it.next();
@@ -136,11 +135,11 @@ public class CourseCollectionManager {
         System.out.println("=== 1. 新增報名資料 ===");
         manager.addStudent(new StudentRegistration("S01", "Alice", 92, "Honor"));
         manager.addStudent(new StudentRegistration("S02", "Bob", 78, "Sports"));
-        manager.addStudent(new StudentRegistration("S03", "Charlie", 55, "")); // 空白 tag
+        manager.addStudent(new StudentRegistration("S03", "Charlie", 55, ""));
         manager.addStudent(new StudentRegistration("S04", "David", 85, "Honor"));
         manager.addStudent(new StudentRegistration("S05", "Eve", 48, ""));
-        manager.addStudent(new StudentRegistration("S06", "Frank", 85, "Arts")); // 同分
-        manager.addStudent(new StudentRegistration("S01", "Duplicate", 100, "")); // 重複學號拒絕
+        manager.addStudent(new StudentRegistration("S06", "Frank", 85, "Arts"));
+        manager.addStudent(new StudentRegistration("S01", "Duplicate", 100, ""));
 
         manager.printAll();
 

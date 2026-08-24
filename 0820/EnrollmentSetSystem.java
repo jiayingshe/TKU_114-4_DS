@@ -45,7 +45,6 @@ public class EnrollmentSetSystem {
     }
 
     public static boolean cancel(String studentId, String courseCode) {
-        // 使用新建立但身分相同的物件來移除
         Enrollment e = new Enrollment(studentId, courseCode);
         boolean result = enrollments.remove(e);
         System.out.printf("取消報名 [%s -> %s] : %b\n", studentId, courseCode, result);
@@ -54,9 +53,9 @@ public class EnrollmentSetSystem {
 
     public static void main(String[] args) {
         System.out.println("=== 1. 新增報名測試 ===");
-        enroll("S001", "CS101"); // true
-        enroll("S001", "CS102"); // 同一人加入不同課程 -> true
-        enroll("S001", "CS101"); // 同一人重複加入同一課程 -> false
+        enroll("S001", "CS101");
+        enroll("S001", "CS102");
+        enroll("S001", "CS101");
 
         System.out.println("\n=== 2. 以同身分新物件測試 contains() ===");
         Enrollment query = new Enrollment("S001", "CS101");

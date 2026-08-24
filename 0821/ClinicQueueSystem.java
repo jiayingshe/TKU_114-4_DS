@@ -25,13 +25,11 @@ public class ClinicQueueSystem {
     private final Queue<Patient> queue = new ArrayDeque<>();
     private final List<Patient> completedList = new ArrayList<>();
 
-    // 一般掛號 (維持 FIFO)
     public void register(Patient patient) {
         queue.offer(patient);
         System.out.println("掛號成功: " + patient);
     }
 
-    // 取消指定病歷號
     public boolean cancelRegistration(String patientId) {
         boolean removed = queue.removeIf(p -> p.getId().equals(patientId));
         if (removed) {
@@ -42,7 +40,6 @@ public class ClinicQueueSystem {
         return removed;
     }
 
-    // 叫號
     public Patient callNext() {
         Patient p = queue.poll();
         if (p != null) {
@@ -54,14 +51,12 @@ public class ClinicQueueSystem {
         return p;
     }
 
-    // 查看下一位
     public Patient peekNext() {
         Patient p = queue.peek();
         System.out.println("下一位預計看診: " + (p != null ? p : "無"));
         return p;
     }
 
-    // 當日完成清單
     public void printCompletedList() {
         System.out.println("=== 當日已看診完成清單 ===");
         if (completedList.isEmpty()) {
@@ -80,11 +75,11 @@ public class ClinicQueueSystem {
 
         clinic.peekNext();
 
-        clinic.cancelRegistration("P002"); // 取消中間的掛號
+        clinic.cancelRegistration("P002");
 
         clinic.callNext();
         clinic.callNext();
-        clinic.callNext(); // 空 Queue 測試
+        clinic.callNext();
 
         clinic.printCompletedList();
     }

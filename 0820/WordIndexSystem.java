@@ -15,7 +15,6 @@ public class WordIndexSystem {
         Set<String> uniqueWords = new LinkedHashSet<>();
 
         for (String sentence : sentences) {
-            // 清除標點符號並統一轉小寫
             String cleaned = sentence.replaceAll("[,.]", "").toLowerCase();
             String[] words = cleaned.split("\\s+");
 

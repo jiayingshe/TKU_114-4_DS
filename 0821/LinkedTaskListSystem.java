@@ -69,14 +69,12 @@ class TaskLinkedList {
     public boolean removeById(String id) {
         if (head == null) return false;
 
-        // 刪除 Head
         if (head.task.getId().equals(id)) {
             head = head.next;
             size--;
             return true;
         }
 
-        // 刪除 Middle 或 Tail
         TaskNode curr = head;
         while (curr.next != null && !curr.next.task.getId().equals(id)) {
             curr = curr.next;
@@ -91,7 +89,7 @@ class TaskLinkedList {
     }
 
     public boolean insertAfter(String existingId, Task task) {
-        if (findById(task.getId()) != null) return false; // 重複 id 不得加入
+        if (findById(task.getId()) != null) return false;
 
         TaskNode curr = head;
         while (curr != null) {
@@ -104,7 +102,7 @@ class TaskLinkedList {
             }
             curr = curr.next;
         }
-        return false; // 找不到 existingId
+        return false;
     }
 
     public void printAll() {

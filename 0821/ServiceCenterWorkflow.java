@@ -29,7 +29,6 @@ public class ServiceCenterWorkflow {
     private final Deque<ServiceTicket> completedStack = new ArrayDeque<>();
     private final Set<String> existingIds = new HashSet<>();
 
-    // 建立工單（Prevent Duplicate ID）
     public boolean createTicket(String id, String clientName) {
         if (existingIds.contains(id)) {
             System.out.println("[建立失敗] 重複的 Ticket ID: " + id);
@@ -43,7 +42,6 @@ public class ServiceCenterWorkflow {
         return true;
     }
 
-    // 處理下一個
     public ServiceTicket processNext() {
         ServiceTicket ticket = waitingQueue.poll();
         if (ticket != null) {
@@ -55,7 +53,6 @@ public class ServiceCenterWorkflow {
         return ticket;
     }
 
-    // 取消尚未處理的 Ticket
     public boolean cancelWaiting(String id) {
         ServiceTicket ticket = ticketMap.get(id);
         if (ticket == null || !waitingQueue.contains(ticket)) {
@@ -67,7 +64,6 @@ public class ServiceCenterWorkflow {
         return true;
     }
 
-    // Undo：將最後完成的放回 waiting queue 前端
     public boolean undoLastCompletion() {
         if (completedStack.isEmpty()) {
             System.out.println("[Undo 失敗] 無已完成記錄");
@@ -96,24 +92,24 @@ public class ServiceCenterWorkflow {
         System.out.println("--- 1. 測試建立與重複 ID 阻擋 ---");
         center.createTicket("TK-01", "Alice");
         center.createTicket("TK-02", "Bob");
-        center.createTicket("TK-01", "Charlie"); // 重複 ID 測試
+        center.createTicket("TK-01", "Charlie");
 
         System.out.println("\n--- 2. 測試處理與取消不存的 ID ---");
-        center.processNext(); // TK-01 完成
-        center.cancelWaiting("TK-99"); // 取消不存在 ID
-        center.cancelWaiting("TK-01"); // 試圖取消已完成的 ID（應失敗）
+        center.processNext();
+        center.cancelWaiting("TK-99");
+        center.cancelWaiting("TK-01");
 
         System.out.println("\n--- 3. 測試連續兩次 Undo ---");
         center.createTicket("TK-03", "David");
-        center.processNext(); // TK-02 完成
-        center.processNext(); // TK-03 完成
+        center.processNext();
+        center.processNext();
 
-        center.undoLastCompletion(); // Undo TK-03
-        center.undoLastCompletion(); // Undo TK-02
+        center.undoLastCompletion();
+        center.undoLastCompletion();
 
         System.out.println("\n--- 4. 測試空 Queue 處理與多餘 Undo ---");
-        center.undoLastCompletion(); // Undo TK-01
-        center.undoLastCompletion(); // 測試空 Stack Undo
+        center.undoLastCompletion();
+        center.undoLastCompletion();
 
         center.printSummary();
     }
